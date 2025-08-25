@@ -3,6 +3,15 @@ import './CheckBoxStyle.css';
 
 const CheckBoxStyle = () => {
 
+    const [checked,setChecked] = useState(false);
+
+    const checkHandler = (e) => {
+
+        setChecked(e.target.checked);
+    }
+
+
+
     /*
       1. input[checkbox]에 change이벤트가 걸려서
       2. check상태가 바뀔 때마다 상태변수를 논리값으로 업데이트하여
@@ -14,8 +23,10 @@ const CheckBoxStyle = () => {
             <input
                 type='checkbox'
                 id='styled-checkbox'
+                onChange={checkHandler}
+                checked={checked}
             />
-            <label className='unchecked' htmlFor='styled-checkbox'>Check me!</label>
+            <label className= {checked ? `checked` : 'unchecked'} htmlFor='styled-checkbox'>Check me!</label>
         </div>
     );
 };
