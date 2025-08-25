@@ -4,19 +4,27 @@ import ExpenseDate from './ExpenseDate.jsx';
 
 const ExpenseItem = ({expense}) => {
 
-    // console.log(props);
+    const {title, price, date} = expense;
 
-    const {title,price,date} = expense;
+    // 이벤트 핸들러
+    const clickHandler = e => {
+        alert(`click!`)
+    }
+
 
     return (
-        <div className='expense-item'>
+        <div className="expense-item">
 
-           <ExpenseDate expenseDate={date}/>
+            <ExpenseDate expenseDate={date}/>
 
-            <div className='expense-item__description'>
+            <div className="expense-item__description">
                 <h2>{title}</h2>
-                <div className='expense-item__price'>{price}원</div>
+                <div className="expense-item__price">{price}원</div>
             </div>
+
+            <button id="btn1" onClick={clickHandler}>버튼 1</button>
+
+
         </div>
     );
 };
