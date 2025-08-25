@@ -1,5 +1,6 @@
 import React from 'react';
-
+import Hello from './components/Hello';
+import Bye from './components/Bye';
 
 /*
     jsx : 리액트에서 사용하는 특수한 js문법, 태그를 그대로 쓰면 알아서 변환
@@ -20,15 +21,9 @@ function App() {
 
     return ( // 리턴은 하나로 감싸서 내보내야한다.
         <>
-            <header>
-                {$h1}
-                <h2>{text}</h2>
-                <lable htmlFor="nameInput">이름: </lable>
-                <input id="nameInput" type="text"/>
-            </header>
-            <main>
-                이곳은 메인 컨텐츠입니다.
-            </main>
+            <Hello />
+            <Bye/>
+            <Hello />
         </>
     )
         ;
