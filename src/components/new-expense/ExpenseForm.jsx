@@ -110,7 +110,7 @@ const ExpenseForm = ({ onAdd }) => {
                 </div>
             </div>
             <div className="new-expense__actions">
-                <button type="buttin" className="cancel-btn">Cancel</button>
+                <button type="button" className="cancel-btn">Cancel</button>
                 <button type="submit">Add Expense</button>
             </div>
         </form>
