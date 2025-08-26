@@ -1,11 +1,8 @@
 import React from 'react';
 import ExpenseList from './components/expenses/ExpenseList.jsx';
 import NewExpense from './components/new-expense/NewExpense.jsx';
-import Counter from './components/Counter.jsx';
-
 
 const App = () => {
-
     const expenseList = [
         {
             title: '닭강정',
@@ -24,15 +21,21 @@ const App = () => {
         },
     ];
 
-    return(
-        <>
-            <Counter/>
-            <NewExpense/>
-            <ExpenseList expenses={expenseList}/>
+    // 상향식 데이터 전달을 위해 하위컴포넌트(ExpenseForm)에게 함수 하나를 내려줌
+    const onAddExpense = (userInput) => {
+        console.log('상향식 데이터 전달용 함수');
+        console.log('끌어올려진 데이터: ', userInput);
 
+        expenseList.push(userInput);
+        console.log(expenseList);
+    };
+
+    return (
+        <>
+            <NewExpense onSave={onAddExpense} />
+            <ExpenseList expenses={expenseList} />
         </>
     );
 };
-
 
 export default App;
