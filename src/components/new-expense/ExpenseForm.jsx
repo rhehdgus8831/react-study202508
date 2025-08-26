@@ -3,6 +3,8 @@ import './ExpenseForm.css';
 
 const ExpenseForm = () => {
 
+    // console.log('렌더링 시작!');
+
     // 입력값을 상태관리
     // const [title, setTitle] = useState('');
     // const [price, setPrice] = useState(0);
@@ -12,10 +14,10 @@ const ExpenseForm = () => {
         title: '',
         price: 0,
         date: null
-    }
+    };
 
     // 객체로 상태값을 한번에 관리
-    const [userInput, setUserInput] = useState({initUserInputState});
+    const [userInput, setUserInput] = useState(initUserInputState);
 
     // 오늘 날짜를 YYYY-MM-DD 형식으로 가져오는 함수
     const getTodayDate = () => {
@@ -30,9 +32,9 @@ const ExpenseForm = () => {
     const handleSubmit = e => {
         e.preventDefault();
         // console.log('form이 제출됨!');
-        //const payload = { title, price, date };
+        // const payload = { title, price, date };
 
-        console.log('',userInput);
+        console.log('userInput: ', userInput);
 
         // 입력창 초기화
         /*
@@ -43,34 +45,31 @@ const ExpenseForm = () => {
         // setPrice(0);
         // setDate(null);
 
-        setUserInput(initUserInputState)
-
+        setUserInput(initUserInputState);
 
     };
+
 
     // 제목 입력 이벤트
     const titleChangeHandler = e => {
         /*
-         리액트는 기존객체에서 프로퍼티 값만 바꾸면 상태변경을 감지하지 못함
-        */
-        const newUserInput = {
-            ...userInput,
+          리액트는 기존객체에서 프로퍼티 값만을 바꾸면 상태변경을 감지하지 못함
+         */
+        setUserInput(prevUserInput => ({
+            ...prevUserInput,
             title: e.target.value,
-        };
-        setUserInput(newUserInput);
+        }));
     };
 
-    const priceChangeHandler = e => setUserInput({
-        ...userInput,
+    const priceChangeHandler = e => setUserInput(prev => ({
+        ...prev,
         price: +e.target.value,
-    });
+    }));
 
-    const dateChangeHandler = e => setUserInput({
-        ...userInput,
+    const dateChangeHandler = e => setUserInput(prev => ({
+        ...prev,
         date: e.target.value,
-    });
-
-
+    }));
 
     return (
         <form onSubmit={handleSubmit}>
