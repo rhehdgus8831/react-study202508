@@ -5,7 +5,7 @@ import Card from '../ui/Card.jsx';
 import ExpenseFilter from './ExpenseFilter.jsx';
 import ExpenseChart from '../chart/ExpenseChart.jsx';
 
-const ExpenseList = ({ expenses: expenseList }) => {
+const ExpenseList = ({ expenses : expenseList }) => {
 
     const [year, setYear] = useState(new Date().getFullYear().toString());
     /*
