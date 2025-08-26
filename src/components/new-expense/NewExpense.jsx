@@ -1,15 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './NewExpense.css';
 import ExpenseForm from './ExpenseForm';
 
 const NewExpense = ({ onSave }) => {
 
-    const formComponent = <ExpenseForm onAdd={onSave} />;
-    const buttonComponent = <button>새로운 지출 추가하기</button>;
+    // 화면 상태를 제어하기 위한 논리상태 변수
+    const [toggle, setToggle] = useState(false);
+
+    const formComponent = <ExpenseForm onAdd={onSave} onCancel = {() => setToggle(false)}/>;
+    const buttonComponent = <button onClick={() => setToggle(true)}>새로운 지출 추가하기</button>;
+
+
 
     return (
         <div className='new-expense'>
-            { formComponent }
+            { toggle ? formComponent : buttonComponent }
         </div>
     );
 };
