@@ -6,8 +6,7 @@ const CheckBoxStyle = () => {
     const [checked,setChecked] = useState(false);
 
     const checkHandler = (e) => {
-
-        setChecked(e.target.checked);
+        setChecked(!checked);
     }
 
 
@@ -24,7 +23,6 @@ const CheckBoxStyle = () => {
                 type='checkbox'
                 id='styled-checkbox'
                 onChange={checkHandler}
-                checked={checked}
             />
             <label className= {checked ? `checked` : 'unchecked'} htmlFor='styled-checkbox'>Check me!</label>
         </div>
