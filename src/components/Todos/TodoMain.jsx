@@ -3,12 +3,15 @@ import React from 'react';
 import styles from './scss/TodoMain.module.scss';
 import TodoItem from './TodoItem';
 
-const TodoMain = () => {
+const TodoMain = ({todo, onDelete, onCheck}) => {
+
+
+
     return (
         <ul className={styles['todo-list']}>
-            <TodoItem />
-            <TodoItem />
-            <TodoItem />
+
+            {todo.map(todo => <TodoItem key={todo.id} todo={todo} onDelete={onDelete} onCheck={onCheck}/>)}
+
         </ul>
     );
 };
