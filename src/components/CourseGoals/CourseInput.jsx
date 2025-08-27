@@ -2,52 +2,53 @@ import React, {useState} from 'react';
 import './CourseInput.css';
 import Button from '../ui/Button';
 
-const CourseInput = ({onAdd}) => {
+const CourseInput = ({ onAdd }) => {
 
-    const [enteredGoal, setEnteredGoal] = useState('');
-
+    // 목표인풋에 입력한 값 상태관리
+    const [enteredText, setEnteredText] = useState('');
     // 입력값에 오류가 있는지 여부를 상태관리
-    const [isValid, setIsVaild] = useState(null);
+    const [isValid, setIsValid] = useState(null);
 
-
-    const handleSubmit = e => {
+    const submitHandler = e => {
         e.preventDefault();
 
-        if (enteredGoal.trim().length === 0) {
-            setIsVaild(false);
+        // 입력값 검증
+        if (!enteredText.trim()) {
+            setIsValid(false);
             return;
         }
-        console.log(`입력된 목표`,enteredGoal);
 
-        onAdd(enteredGoal);
+        // console.log(`입력값: ${enteredText}`);
+        onAdd(enteredText);
 
+        setEnteredText('');
+        setIsValid(true);
+    };
 
-        setEnteredGoal('');
-        setIsVaild(true)
-    }
-
-    const goalInputChangeHandler = e => {
+    const goalInputHandler = e => {
         const inputValue = e.target.value;
 
-        if(inputValue.trim()) {
-            setIsVaild(true);
+        // 입력값 검증
+        if (inputValue.trim()) {
+            setIsValid(true);
         }
 
-        setEnteredGoal(inputValue);
-    }
-
+        setEnteredText(inputValue);
+    };
     return (
-        <form onSubmit={handleSubmit}>
-            <div className='form-control'>
-                <label style={{color: isValid !== false ? 'black':'red'}}>나의 목표</label>
-                <input type='text'
-                       value={enteredGoal}
-                       onChange={goalInputChangeHandler}
-                       style=
-                           {{
-                           background : isValid !== false ? 'transparent': 'salmon',
-                           borderColor: isValid !== false ? 'black': 'red'
-                            }}
+        <form onSubmit={submitHandler}>
+            <div className={`form-control ${isValid === false ? 'invalid' : ''}`}>
+                <label
+                    // style={{ color: isValid !== false ? 'black' : 'red' }}
+                >나의 목표</label>
+                <input
+                    type='text'
+                    onInput={goalInputHandler}
+                    value={enteredText}
+                    // style={{
+                    //   background: isValid !== false ? 'transparent' : 'salmon',
+                    //   borderColor: isValid !== false ? 'black' : 'red'
+                    // }}
                 />
             </div>
             <Button type='submit'>목표 추가하기</Button>
