@@ -33,11 +33,11 @@ const AddUsers = ({onAddUser}) => {
         e.preventDefault();
 
         // 입력값 검증
-        if(!userValue.username.trim() || !userValue.age.trim()) {
+        if (!userValue.username.trim() || !userValue.age.trim()) {
             // 에러처리
             setError({
                 title: `유효하지 않은 입력값`,
-                message : `이름은 필수 입력값입니다.`
+                message: `이름은 필수 입력값입니다.`
             });
             return;
         }
@@ -45,7 +45,7 @@ const AddUsers = ({onAddUser}) => {
             // 에러처리
             setError({
                 title: `유효하지 않은 나이 범위`,
-                message : `나이는 0 또는 음수가 될 수 없습니다.`
+                message: `나이는 0 또는 음수가 될 수 없습니다.`
             });
             return;
         }
@@ -64,26 +64,26 @@ const AddUsers = ({onAddUser}) => {
 
     return (
         <>
-            {error && <ErrorModal title={error.title} message={error.message}/>}
+            {error && <ErrorModal title={error.title} message={error.message} onClose={() => setError(null)} />}
             <Card className={styles.input}>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='username'>이름</label>
-                <input
-                    id='username'
-                    type='text'
-                    value={userValue.username}
-                    onChange={handleName}
-                />
-                <label htmlFor='age'>나이</label>
-                <input
-                    id='age'
-                    type='number'
-                    value={userValue.age}
-                    onChange={handleAge}
-                />
-                <Button type='submit'>가입하기</Button>
-            </form>
-        </Card>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="username">이름</label>
+                    <input
+                        id="username"
+                        type="text"
+                        value={userValue.username}
+                        onChange={handleName}
+                    />
+                    <label htmlFor="age">나이</label>
+                    <input
+                        id="age"
+                        type="number"
+                        value={userValue.age}
+                        onChange={handleAge}
+                    />
+                    <Button type="submit">가입하기</Button>
+                </form>
+            </Card>
         </>
     );
 };
