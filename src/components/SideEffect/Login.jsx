@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Card from '../ui/Card';
 import styles from './Login.module.css';
 import Button from '../ui/Button';
 
-const Login = ({ onLogin }) => {
+const Login = ({onLogin}) => {
     // 사용자가 입력한 이메일을 상태관리
     const [enteredEmail, setEnteredEmail] = useState('');
 
@@ -20,22 +20,46 @@ const Login = ({ onLogin }) => {
     // 로그인 버튼을 열어줄지에 대한 여부
     const [formIsValid, setFormIsValid] = useState(false);
 
+    // 로그인 버튼 활성화 여부 검증을 위한 useEffect
+    useEffect(() => {
+
+        const timerId = setTimeout(() => {
+            console.log(`useEffect call in Login.js`);
+            setFormIsValid(
+                enteredEmail.includes('@') && enteredPassword.target.value.trim().length > 6
+            );
+        }, 1000);
+
+        // cleanup 함수 -> useEffect가 실행되고 다음 번 useEffect 실행 직전에 실행되는 정리 함수
+        return () => {
+            // console.log(`cleanup 실행!`);
+            clearTimeout(timerId);
+        };
+
+    }, [enteredEmail, enteredPassword]);
+    /*
+        useEffect의 두번째 파라미터 배열은 의존성 배열이라고 부르며
+        1. 생략할 경우 useEffect는 렌더링시마다 반복 실행됨 ( 쓰레기임 )
+        2. 빈 배열일 경우 최초 한번만 실행됨 ( 토큰 검사 최초 1번, 서버 데이터 패칭 최초1번 )
+        3. 배열안에 변수를 넣을 경우, 해당 변수 값이 변경될 때마다 재실행
+    */
+
     // 이메일 값 저장 및 검증
     const handleEmail = (e) => {
         setEnteredEmail(e.target.value);
 
-        setFormIsValid(
-            e.target.value.includes('@') && enteredPassword.trim().length > 6
-        );
+        /* setFormIsValid(
+             e.target.value.includes('@') && enteredPassword.trim().length > 6
+         );*/
     };
 
     // 패스워드 값 저장 및 검증
     const handlePassword = (e) => {
         setEnteredPassword(e.target.value);
 
-        setFormIsValid(
-            enteredEmail.includes('@') && e.target.value.trim().length > 6
-        );
+        /* setFormIsValid(
+             enteredEmail.includes('@') && e.target.value.trim().length > 6
+         );*/
     };
 
     // 이메일 검증
@@ -59,10 +83,10 @@ const Login = ({ onLogin }) => {
             <form onSubmit={handleSubmit}>
                 <div
                     className={`${styles.control} ${emailIsValid === false ? styles.invalid : ''}`}>
-                    <label htmlFor='email'>E-Mail</label>
+                    <label htmlFor="email">E-Mail</label>
                     <input
-                        type='email'
-                        id='email'
+                        type="email"
+                        id="email"
                         value={enteredEmail}
                         onInput={handleEmail}
                         onBlur={validateEmail}
@@ -70,10 +94,10 @@ const Login = ({ onLogin }) => {
                 </div>
                 <div
                     className={`${styles.control} ${passwordIsValid === false ? styles.invalid : ''}`}>
-                    <label htmlFor='password'>Password</label>
+                    <label htmlFor="password">Password</label>
                     <input
-                        type='password'
-                        id='password'
+                        type="password"
+                        id="password"
                         value={enteredPassword}
                         onInput={handlePassword}
                         onBlur={validatePassword}
@@ -81,7 +105,7 @@ const Login = ({ onLogin }) => {
                 </div>
                 <div className={styles.actions}>
                     <Button
-                        type='submit'
+                        type="submit"
                         className={styles.btn}
                         disabled={!formIsValid}
                     >
