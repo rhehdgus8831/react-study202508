@@ -1,46 +1,47 @@
 import React, {useState} from 'react';
-import TodoHeader from './TodoHeader.jsx';
+import TodoHeader from './TodoHeader';
 import styles from './scss/TodoTemplate.module.scss';
 import TodoMain from './TodoMain';
 import TodoInput from './TodoInput';
-import todoItem from './TodoItem.jsx';
+import {TODOS} from './dummy-data/DUMMY_TODOS.js';
 
 const TodoTemplate = () => {
 
-    const todo = [
-        {
-        id : Math.random().toString() ,
-        boolean : false,
-        data : "메롱"
-        }
-    ];
+    const [todos, setTodos] = useState(TODOS);
 
-    const [todoInput, setTodoInput] = useState(todo);
+    const addTodo = (title) => {
+        const newTodo = {id: Math.random().toString(), title, done: false};
+        setTodos(prev => [...prev, newTodo]);
+    };
 
-    const addHandler = (todoText) => {
+    const removeTodo = id => {
+        setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+    };
 
-        setTodoInput(prev => [...prev,{
-            id : Math.random().toString() ,
-            boolean : false,
-            data : todoText
-        }]);
-    }
+    const checkTodo = id => {
+        // id로 done의 값을 변경할 객체를 탐색한 후 논리값 반전
+        setTodos(prevTodos => prevTodos.map(todo =>
+            todo.id === id
+                ? { ...todo, done: !todo.done }
+                : todo
+        ));
 
-    const deleteHandler = (id) => {
-        setTodoInput(todoInput.filter(todoItem => todoItem.id !== id))
-    }
+        // const copyTodos = [...todos];
+        // const targetTodo = copyTodos.find(todo => todo.id === id);
+        //
+        // targetTodo.done = !targetTodo.done;
+        //
+        // setTodos(copyTodos);
+    };
 
-    const checkHandler = (id) => {
-        setTodoInput(todoInput.map(todoItem => todoItem.id === id ? {...todoItem, boolean : !todoItem.boolean} : todoItem))
-    }
-
-
+    // 남은 할 일 개수 구하기
+    const countRestTodo = todos.filter(todo => !todo.done).length;
 
     return (
         <div className={styles.TodoTemplate}>
-            <TodoHeader todo={todoInput}/>
-            <TodoMain todo={todoInput} onDelete={deleteHandler} onCheck={checkHandler}/>
-            <TodoInput onAdd={addHandler}/>
+            <TodoHeader count={countRestTodo} />
+            <TodoMain items={todos} onDelete={removeTodo} onCheck={checkTodo} />
+            <TodoInput onAdd={addTodo} />
         </div>
     );
 };

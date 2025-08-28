@@ -1,13 +1,10 @@
+
 import React, {useState} from 'react';
 import { MdAdd } from 'react-icons/md';
 
 import styles from './scss/TodoInput.module.scss';
 
 const TodoInput = ({onAdd}) => {
-
-    const [todoText, setTodoText] = useState('');
-
-    const [isOpen, setIsOpen] = useState(false);
 
     const {
         'form-wrapper': wrapper,
@@ -16,44 +13,35 @@ const TodoInput = ({onAdd}) => {
         open: openStyle,
     } = styles;
 
-    const changeHandler = e => setTodoText(e.target.value);
+    // form toggling
+    const [toggle, setToggle] = useState(false);
 
+    // 할 일 입력값 상태관리
+    const [enteredText, setEnteredText] = useState('');
 
     const submitHandler = e => {
         e.preventDefault();
+        // console.log(enteredText);
+        onAdd(enteredText);
 
-        console.log(todoText);
-
-        if (!todoText.trim()) {
-            return;
-        }
-
-        onAdd(todoText);
-        setTodoText('');
-    }
-
-    const inputChangeHandler = () => {
-    setIsOpen(prev => !prev);
-    }
-
+        setEnteredText('');
+    };
 
     return (
         <>
-        {isOpen && <div className={wrapper}>
-                <form className={insertForm}
-                      onSubmit={submitHandler}>
+            {toggle && <div className={wrapper}>
+                <form className={insertForm} onSubmit={submitHandler}>
                     <input
-                        type='text'
-                        placeholder='할 일을 입력 후, 엔터를 누르세요!'
-                        value={todoText}
-                        onChange={changeHandler}
+                        type="text"
+                        placeholder="할 일을 입력 후, 엔터를 누르세요!"
+                        value={enteredText}
+                        onInput={e => setEnteredText(e.target.value)}
                     />
                 </form>
             </div>}
-
             <button
-                className={`${insertBtn} ${insertBtn} ${isOpen ? openStyle : ''}`}
-                onClick={inputChangeHandler}
+                className={`${insertBtn} ${toggle ? openStyle : ''}`}
+                onClick={() => setToggle(!toggle)}
             >
                 <MdAdd />
             </button>
